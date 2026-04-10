@@ -1,6 +1,6 @@
 # The-Morning-Calm-Ledger
 A Physics-based model for tracking global currency reserves. Starting with South Korea
-🇰🇷 Project 1: The Morning Calm Ledger (고요한 아침의 장부)
+🇰🇷 Project 1: The Morning Calm Ledger
 
 🇯🇵 Project 2: The Shogun's Vault
 

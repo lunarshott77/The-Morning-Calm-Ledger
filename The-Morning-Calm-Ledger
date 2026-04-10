@@ -1,0 +1,112 @@
+import yfinance as yf
+import numpy as np
+import pandas as pd
+from scipy.optimize import least_squares
+import matplotlib.pyplot as plt
+from datetime import datetime
+import calendar
+import sys
+
+# ==========================================
+# [Sovereign Engine: Public Release v1.0]
+# ==========================================
+_V_B = 0x01
+_E_P = 1e-2
+_L_D = 0.15
+_D_1 = 0.25
+_D_2 = 0.25
+
+class SovereignBacktester:
+    def __init__(self):
+        self._h = []
+        self.setup_interface()
+
+    def setup_interface(self):
+        print("="*50)
+        print("💎 Sovereign Engine: Lightweight Public Release")
+        print("="*50)
+
+        self.year = int(input("📅 Target Year (e.g., 2026): "))
+        self.month = int(input("📅 Target Month (e.g., 3): "))
+        self.start_v = float(input(f"💰 Initial Reserve on {self.month}/1 (Billions): "))
+        self.target_v = float(input(f"🎯 Target/Official Reserve end of {self.month} (Billions): "))
+
+        v_export = float(input(f"🚢 Confirmed Export Amount for month {self.month-2}: "))
+        self.v_export_d = v_export / 30.0
+
+        v_fixed = float(input(f"🏦 Fixed Expenditure for month {self.month}: "))
+        self.v_fixed_d = v_fixed / 30.0
+
+        # Users must manually input P and Q
+        self.p_val = float(input("⚙️ Enter Market Pressure Coefficient (P): "))
+        self.q_val = float(input("⚙️ Enter Volatility Coefficient (Q): "))
+
+    def _k_map(self, t_o, t_p, d_p):
+        _tv = t_o.hour + t_o.minute / 60.0
+        _dv = t_o.weekday()
+        return np.exp(-abs(_tv - t_p)) * np.exp(-abs(_dv - d_p))
+
+    def _m_eq(self, _v5, _e, _de, _t, _P, _Q):
+        _C, _w, _a, _k, _dV = _v5
+        _r = []
+        for i in range(5):
+            _ti = _t[i]
+            _wnl = np.exp(-_L_D * abs((_ti.hour + _ti.minute/60.0) - 22.0))
+            _vm = _V_B * _wnl * (1.0 / ((_C - _e[i])**2 + _E_P)) * _Q
+            _vp = ((1.0 - _a) * _vm) + (_a * (abs(_de[i]) / _k) * _V_B * _P)
+
+            _vi = _D_1 * (1.0 - _w) * self._k_map(_ti, 10.0, 0.0) * self.v_export_d
+            _vo = _D_2 * self.v_fixed_d * self._k_map(_ti, 14.0, 4.0)
+            _r.append(_dV - (_vi - _vo - _vp))
+        return _r
+
+    def fetch_data(self):
+        _, last_day = calendar.monthrange(self.year, self.month)
+        start_date = f"{self.year}-{self.month:02d}-01"
+        end_date = f"{self.year}-{self.month:02d}-{last_day}"
+        df = yf.download("USDKRW=X", start=start_date, end=end_date, interval="15m", progress=False)
+        if df.empty: raise ValueError("Data extraction failed.")
+        df['Close'] = df['Close'].ffill().rolling(window=5, min_periods=1).mean()
+        if isinstance(df.columns, pd.MultiIndex): df.columns = df.columns.get_level_values(0)
+        return df
+
+    def run(self):
+        self.df = self.fetch_data()
+        print(f"\n🚀 [Step 1] Initializing simulation with P={self.p_val:.2f}, Q={self.q_val:.2f}...")
+
+        self._f_v = self.start_v
+        prices = self.df['Close'].values
+        times = self.df.index
+        dE = np.diff(prices, prepend=prices[0])
+        dt = np.insert(np.diff(times).astype('timedelta64[m]').astype(int), 0, 1)
+
+        for i in range(4, len(self.df)):
+            e_w, de_w, t_w = prices[i-4:i+1], dE[i-4:i+1], times[i-4:i+1]
+            e_mx = np.max(e_w)
+            try:
+                s_val = least_squares(self._m_eq, x0=[e_mx+25, 0.5, 0.5, 0.5, 0.0],
+                                      bounds=([e_mx+0.01, 0, 0, 0.01, -250], [2500, 1, 1, 30, 250]),
+                                      args=(e_w, de_w, t_w, self.p_val, self.q_val)).x
+                
+                # Internal scaling logic (Obfuscated unit matching)
+                self._f_v += (s_val[4] * dt[i]) / 15.0
+            except: pass
+
+            if i % 10 == 0:
+                self._h.append({'Time': times[i], 'V': self._f_v})
+                sys.stdout.write(f'\r⚡ Processing Simulation: {self._f_v:.4f}B')
+
+        self.plot_results()
+
+    def plot_results(self):
+        hist_df = pd.DataFrame(self._h)
+        plt.style.use('dark_background')
+        plt.figure(figsize=(12, 6))
+        plt.plot(hist_df['Time'], hist_df['V'], color='#00FFCC', lw=2)
+        plt.title(f"Sovereign Reserve Project | Mode: Public \n Parameters [P={self.p_val:.2f}, Q={self.q_val:.2f}]")
+        plt.grid(True, alpha=0.2)
+        plt.show()
+
+if __name__ == "__main__":
+    tester = SovereignBacktester()
+    tester.run()

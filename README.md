@@ -14,3 +14,5 @@ A Physics-based model for tracking global currency reserves. Starting with South
 🇪🇺 Project 6: The Iron Loom of Brussels
 
 🇨🇭 Project 7: The Alpine Bunker
+
+<img width="1017" height="528" alt="download" src="https://github.com/user-attachments/assets/7dec88c7-efc4-4c5a-9821-0aa540ee472d" />

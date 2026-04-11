@@ -35,3 +35,9 @@ A Physics-based model for tracking global currency reserves. Starting with South
 🇨🇭 Project 7: The Alpine Bunker
 
 <img width="1017" height="528" alt="download" src="https://github.com/user-attachments/assets/7dec88c7-efc4-4c5a-9821-0aa540ee472d" />
+
+
+2026-04-11 : i did it. it was w problem
+
+<img width="1017" height="528" alt="download" src="https://github.com/user-attachments/assets/ba8d1ea6-d5c2-4f64-b934-225fe2fb54c2" />
+

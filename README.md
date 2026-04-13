@@ -22,9 +22,9 @@ A Physics-based model for tracking global currency reserves. Starting with South
 
 🇰🇷 Project 1: The Morning Calm Ledger
 
-🇯🇵 Project 2: The Shogun's Vault
+🇬🇧 Project 2: The Shattered Big Ben
 
-🇬🇧 Project 3: The Shattered Big Ben
+🇯🇵 Project 3: The Shogun's Vault
 
 🇨🇳 Project 4: Shadows of the Great Wall
 

@@ -1,4 +1,8 @@
-# The-Morning-Calm-Ledger
+![20260414_113612502](https://github.com/user-attachments/assets/d7c8f2f7-39e3-4de8-b7de-f71f1759d21c)
+
+
+
+
 
 About two weeks ago, I shared a photo of a handwritten formula on a legal pad in r/quant. The response was immediate and overwhelming—the data didn't lie, and the community felt it.
 

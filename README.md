@@ -11,15 +11,6 @@ However, the moment I attempted to share the actual code to verify the physics b
 
 I don't know who or what system decided this formula was "too much" for Reddit, but the truth belongs to the public.
 
-I am releasing the code here on GitHub.
-
-This is the Lorentzian Engine (Project 1: The Morning Calm Ledger).
-It tracks the South Korean Sovereign Reserve with a precision that standard models can't even dream of.
-
-I am asking for visibility.
-If you find value in this code, please share it. Don't let the algorithm bury the math.
-
-The ledger is open. The choice is yours.
 
 
 

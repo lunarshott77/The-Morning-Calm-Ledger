@@ -37,3 +37,8 @@ A Physics-based model for tracking global currency reserves. Starting with South
 
 <img width="1017" height="528" alt="download" src="https://github.com/user-attachments/assets/ba8d1ea6-d5c2-4f64-b934-225fe2fb54c2" />
 
+
+
+
+
+harrisonly2007@gmail.com

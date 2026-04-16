@@ -11,7 +11,7 @@ However, the moment I attempted to share the actual code to verify the physics b
 
 I don't know who or what system decided this formula was "too much" for Reddit, but the truth belongs to the public.
 
-
+I am an independent researcher currently focused on modeling EM liquidity flows. Any sponsorships will be used to secure computing resources and data for further model refinement.
 
 
 A Physics-based model for tracking global currency reserves. Starting with South Korea

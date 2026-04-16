@@ -41,4 +41,4 @@ A Physics-based model for tracking global currency reserves. Starting with South
 
 
 
-harrisonly2007@gmail.com
+lunarshott@gmail.com
